@@ -3,14 +3,14 @@
 
 declare(strict_types=1);
 
-use App\Controllers\UserController;
+use Knilo\PhpSydProj\Controllers\UserController;
 use Doctrine\ORM\EntityManager;
 use Knilo\PhpSydProj\Service\UserService;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
 /** @var EntityManager $entityManager */
-$entityManager = require_once __DIR__ . '/../config/database.php';
+$entityManager = require_once __DIR__ . '/../config/Database.php';
 
 // 3. Инициализируем зависимости (Manual Dependency Injection)
 $userService = new UserService($entityManager);

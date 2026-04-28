@@ -1,6 +1,6 @@
 <?php
 
-class getGoodsDto
+class GoodsDto
 {
     public function __construct(
         public string $name,

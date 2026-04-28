@@ -2,25 +2,12 @@
   "name": "knilo/php-syd-proj",
   "autoload": {
     "psr-4": {
-      "Knilo\\PhpSydProj\\": "src/",
-      "App\\": "src/",
-      "entities\\": "entities/",
-      "Enums\\": "backend/Enums/",
-      "dto\\": "backend/DTO/"
+      "Knilo\\PhpSydProj\\": "src/"
     }
   },
-  "authors": [
-    {
-      "name": "Kostia365",
-      "email": "90925004+Kostia365@users.noreply.github.com"
-    }
-  ],
   "require": {
-    "vendor/doctrine/orm": "^3.6",
-    "vendor/symfony/orm-pack": "^2.7",
-    "vendor/vlucas/phpdotenv": "^5.6"
-  },
-  "require-dev": {
-    "vendor/symfony/maker-bundle": "^1.66"
+    "php": ">=8.2",
+    "vlucas/phpdotenv": "^5.6",
+    "ext-pdo": "*"
   }
 }

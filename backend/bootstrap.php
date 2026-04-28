@@ -1,20 +1,28 @@
 <?php
+require_once __DIR__ . '/vendor/autoload.php';
 
-use Doctrine\DBAL\DriverManager;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\ORMSetup;
+use Dotenv\Dotenv;
 
-require_once "vendor/autoload.php";
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
-$paths = [__DIR__ . '/Entities'];
-$isDevMode = true;
+try {
+    $dsn = sprintf(
+        "pgsql:host=%s;port=%d;dbname=%s",
+        $_ENV['DB_HOST'],
+        $_ENV['DB_PORT'],
+        $_ENV['DB_NAME']
+    );
 
-$config = ORMSetup::createAttributeMetadataConfiguration($paths, $isDevMode);
+    $pdo = new PDO($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // Ошибки в виде исключений
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,       // Данные в виде массивов
+        PDO::ATTR_EMULATE_PREPARES => false,                  // Реальная защита от SQL-инъекций
+    ]);
 
-$connectionParams = [
-    'url' => $_ENV['DATABASE_URL'],
-];
+    return $pdo;
 
-$connection = DriverManager::getConnection($connectionParams, $config);
-
-$entityManager = new EntityManager($connection, $config);
+} catch (\PDOException $e) {
+    header('Content-Type: text/plain');
+    die("Ошибка подключения к базе данных: " . $e->getMessage());
+}
