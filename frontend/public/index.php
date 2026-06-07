@@ -1,44 +1,47 @@
 <?php
+require_once __DIR__ . '/../../backend/vendor/autoload.php';
 
-
-declare(strict_types=1);
-
-use Knilo\PhpSydProj\Controllers\UserController;
-use Doctrine\ORM\EntityManager;
-use Knilo\PhpSydProj\Service\UserService;
-
-require_once __DIR__ . '/../vendor/autoload.php';
-
-/** @var EntityManager $entityManager */
-$entityManager = require_once __DIR__ . '/../config/Database.php';
-
-// 3. Инициализируем зависимости (Manual Dependency Injection)
+$entityManager = require_once __DIR__ . '/../../backend/config/Database.php';
 $userService = new UserService($entityManager);
 $userController = new UserController($userService);
 
-// 4. Получаем данные запроса
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$route = $_GET['route'] ?? 'home';
 $method = $_SERVER['REQUEST_METHOD'];
 
-// 5. Простейший Роутинг
-// Мы проверяем, куда пришел пользователь и каким методом
-if ($uri === '/register' && $method === 'POST') {
-
-    // Вызываем метод контроллера
-    $userController->create();
-
-} elseif ($uri === '/users' && $method === 'GET') {
-
-    // Пример другого эндпоинта (если захочешь список пользователей)
-    echo json_encode(['message' => 'Список пользователей пока пуст']);
-
-} else {
-
-    // Если маршрут не найден
-    header("HTTP/1.1 404 Not Found");
-    echo json_encode([
-        'error' => 'Endpoint not found',
-        'requested_uri' => $uri,
-        'method' => $method
-    ]);
+if ($method === 'POST') {
+    switch ($route) {
+        case 'register':
+            $userController->register();
+            exit;
+        case 'login':
+            $userController->login();
+            exit;
+    }
 }
+
+$title = "Project";
+$content = "";
+
+switch ($route) {
+    case 'home':
+        $title = "Welcome";
+        $content = __DIR__ . '/../templates/home.php';
+        break;
+    case 'register':
+        $title = "Create Account";
+        $content = __DIR__ . '/../templates/register.php';
+        break;
+    case 'login':
+        $title = "Login";
+        $content = __DIR__ . '/../templates/login.php';
+        break;
+    case 'services':
+        $title = "Services";
+        $content = __DIR__ . '/../templates/services/list.php';
+        break;
+    default:
+        $title = "404 Not Found";
+        $content = __DIR__ . '/../templates/404.php';
+}
+
+include __DIR__ . '/../templates/layout.php';

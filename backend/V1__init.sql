@@ -9,6 +9,7 @@ CREATE TABLE services
 CREATE TABLE users
 (
     id       SERIAL PRIMARY KEY,
+    name     VARCHAR(100) NOT NULL,
     email    VARCHAR(150) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     role     VARCHAR(20)  NOT NULL DEFAULT 'customer'
@@ -28,5 +29,5 @@ VALUES ('Мужская стрижка', 25.00, 45),
        ('Стрижка бороды', 15.00, 30),
        ('Комплекс (голова + борода)', 35.00, 75);
 
-INSERT INTO users (email, password, role)
-VALUES ('admin@barber.com', '123qwe', 'admin');
+INSERT INTO users (email, name, password, role)
+VALUES ('admin@barber.com', 'bonst', '123qwe', 'admin');
