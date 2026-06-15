@@ -19,18 +19,18 @@ class UserController
 
     public function register(): void
     {
-        $title = "Регистрация";
+        $title = "Register";
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 $dto = UserRegistrationDTO::fromArray($_POST);
                 if ($dto->password !== $dto->confirmPassword) {
-                    throw new Exception("Пароли не совпадают!");
+                    throw new Exception("Passwords do not match!");
                 }
 
                 $this->userService->registerNewUser($dto);
 
-                header('Location: /?action=login&success=registered');
+                header('Location: /?route=login&success=registered');
                 exit;
 
             } catch (Exception $e) {
@@ -43,7 +43,7 @@ class UserController
 
     public function login(): void
     {
-        $title = "Вход";
+        $title = "Login";
         $error = null;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -57,10 +57,10 @@ class UserController
                 $_SESSION['user_id'] = $user->id;
                 $_SESSION['user_role'] = $user->role;
 
-                header('Location: /?action=dashboard');
+                header('Location: /?route=dashboard');
                 exit;
             } else {
-                $error = "Неверный email или пароль";
+                $error = "Invalid email or password";
             }
         }
 
@@ -73,7 +73,7 @@ class UserController
     {
         if (session_status() === PHP_SESSION_NONE) session_start();
         session_destroy();
-        header('Location: /');
+        header('Location: /?route=home');
         exit;
     }
 }

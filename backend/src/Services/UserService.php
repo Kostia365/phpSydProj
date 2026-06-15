@@ -18,8 +18,9 @@ class UserService
     public function registerNewUser(UserRegistrationDTO $dto): bool
     {
         $hashedPassword = password_hash($dto->password, PASSWORD_BCRYPT);
-        $stmt = $this->db->prepare("INSERT INTO users (email, password, role) VALUES (?, ?, ?)");
+        $stmt = $this->db->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
         return $stmt->execute([
+            $dto->name,
             $dto->email,
             $hashedPassword,
             'customer'

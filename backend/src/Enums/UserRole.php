@@ -1,6 +1,6 @@
 <?php
 
-namespace Enums;
+namespace Knilo\PhpSydProj\Enums;
 
 enum UserRole: string
 {

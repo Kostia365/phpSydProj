@@ -25,7 +25,7 @@ class Database {
                     PDO::ATTR_EMULATE_PREPARES   => false,
                 ]);
             } catch (PDOException $e) {
-                die("Ошибка подключения к PostgreSQL: " . $e->getMessage());
+                die("Database connection error: " . $e->getMessage());
             }
         }
         return self::$instance;

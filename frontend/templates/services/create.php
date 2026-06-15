@@ -1,13 +1,24 @@
-<h2>Добавить новую услугу</h2>
-<form action="/?route=service_save" method="POST">
-    <label for="name">Название услуги</label>
-    <input type="text" name="name" id="name" placeholder="Например: Аудит кода" required>
+<div class="container">
+    <div class="form-wrapper">
+        <h2>Add <span style="color: var(--accent)">Service</span></h2>
 
-    <label for="price">Цена ($)</label>
-    <input type="number" name="price" id="price" step="0.01" required>
+        <form action="/?route=service-create" method="POST">
+            <div class="form-group">
+                <label>Service Name</label>
+                <input type="text" name="name" required>
+            </div>
 
-    <label for="description">Описание</label>
-    <textarea name="description" id="description" rows="5"></textarea>
+            <div class="form-group">
+                <label>Price</label>
+                <input type="number" name="price" step="0.01" min="0" required>
+            </div>
 
-    <button type="submit" class="contrast">Опубликовать услугу</button>
-</form>
+            <div class="form-group">
+                <label>Duration Minutes</label>
+                <input type="number" name="duration_minutes" min="1" value="30" required>
+            </div>
+
+            <button type="submit" class="btn">Create Service</button>
+        </form>
+    </div>
+</div>

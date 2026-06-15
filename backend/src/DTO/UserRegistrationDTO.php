@@ -5,6 +5,7 @@ namespace Knilo\PhpSydProj\DTO;
 readonly class UserRegistrationDTO
 {
     public function __construct(
+        public string $name,
         public string $email,
         public string $password,
         public string $confirmPassword
@@ -15,9 +16,10 @@ readonly class UserRegistrationDTO
     public static function fromArray(array $data): self
     {
         return new self(
+            name: htmlspecialchars(trim($data['name'] ?? '')),
             email: filter_var($data['email'] ?? '', FILTER_SANITIZE_EMAIL),
             password: $data['password'] ?? '',
-            confirmPassword: $data['confirm_password'] ?? ''
+            confirmPassword: $data['confirmPassword'] ?? ''
         );
     }
 }

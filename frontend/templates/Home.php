@@ -1,5 +1,5 @@
 <?php
-// Настройка часового пояса (при необходимости)
+// Set timezone
 date_default_timezone_set('Europe/Moscow');
 
 $hour = (int)date('G');

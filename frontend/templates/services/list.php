@@ -1,18 +1,57 @@
-<div class="headings">
-    <h2>Наши услуги</h2>
-    <a href="/?route=service_add" class="button outline"> + Добавить услугу</a>
-</div>
+<?php
+/** @var array $services */
 
-<div class="grid">
-    <article>
-        <header><strong>Backend Development</strong></header>
-        Профессиональная разработка на PHP и Doctrine ORM.
-        <footer><strong>$100/час</strong></footer>
-    </article>
+$isAdmin = ($_SESSION['user_role'] ?? null) === 'admin';
+?>
 
+    <div class="headings">
+        <h2>Our Services</h2>
+
+        <?php if ($isAdmin): ?>
+            <a href="/?route=service-create" class="button outline">+ Add Service</a>
+        <?php endif; ?>
+    </div>
+
+<?php if (empty($services)): ?>
     <article>
-        <header><strong>API Integration</strong></header>
-        Свяжем ваш фронтенд с любым бэкендом.
-        <footer><strong>$80/час</strong></footer>
+        <p>No services available yet.</p>
     </article>
-</div>
+<?php else: ?>
+    <div class="grid">
+        <?php foreach ($services as $service): ?>
+            <article>
+                <header>
+                    <strong><?= htmlspecialchars($service['name']) ?></strong>
+                </header>
+
+                <p>
+                    Duration:
+                    <?= (int)$service['duration_minutes'] ?>
+                    minutes
+                </p>
+
+                <footer>
+                    <strong>$<?= number_format((float)$service['price'], 2) ?></strong>
+
+                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <a href="/?route=booking&service_id=<?= (int)$service['id'] ?>" class="btn">
+                            Book Now
+                        </a>
+
+                        <?php if ($isAdmin): ?>
+                            <a href="/?route=service-edit&id=<?= (int)$service['id'] ?>" class="btn btn-secondary">
+                                Edit
+                            </a>
+
+                            <a href="/?route=service-delete&id=<?= (int)$service['id'] ?>"
+                               class="btn btn-secondary"
+                               onclick="return confirm('Delete this service?')">
+                                Delete
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                </footer>
+            </article>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>

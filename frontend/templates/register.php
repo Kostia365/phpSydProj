@@ -27,7 +27,7 @@
 
             <div class="form-group">
                 <label>Confirm Password</label>
-                <input type="password" name="password_confirm" placeholder="••••••••" required>
+                <input type="password" name="confirmPassword" placeholder="••••••••" required>
             </div>
 
             <button type="submit" class="btn">Initialize Access</button>

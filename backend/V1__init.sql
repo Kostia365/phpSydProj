@@ -25,9 +25,9 @@ CREATE TABLE bookings
 );
 
 INSERT INTO services (name, price, duration_minutes)
-VALUES ('Мужская стрижка', 25.00, 45),
-       ('Стрижка бороды', 15.00, 30),
-       ('Комплекс (голова + борода)', 35.00, 75);
+VALUES ('man standart', 25.00, 45),
+       ('bear cut', 15.00, 30),
+       ('complex', 35.00, 75);
 
 INSERT INTO users (email, name, password, role)
-VALUES ('admin@barber.com', 'bonst', '123qwe', 'admin');
+VALUES ('admin@barber.com', 'Admin', '123qwe', 'admin');
